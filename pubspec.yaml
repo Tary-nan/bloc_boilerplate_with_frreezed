@@ -1,0 +1,64 @@
+name: architecture_bloc
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  auto_route: ^2.4.0
+  bloc: ^7.2.0
+  cupertino_icons: ^1.0.2
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^7.3.0
+  formz: ^0.4.0
+  freezed_annotation: ^0.14.3
+  http: ^0.13.3
+  json_serializable: ^5.0.2
+  logger: ^1.1.0
+  rxdart: ^0.27.2
+
+  authentication_repository:
+    path: packages/authentication_repository
+  user_repository:
+    path: packages/user_repository
+  
+  todos_core_repository:
+    path: packages/todos_core_repository
+  todos_repository_local_storage:
+    path: packages/todos_repository_local_storage
+
+dev_dependencies:
+  auto_route_generator: ^2.4.0
+  bloc_test: ^8.2.0
+  build_runner: ^2.1.2
+  flutter_lints: ^1.0.0
+  flutter_test:
+    sdk: flutter
+  freezed: ^0.14.5
+  mocktail: ^0.1.4
+
+flutter:
+
+  uses-material-design: true
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/
+  #   - images/a_dot_ham.jpeg
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
