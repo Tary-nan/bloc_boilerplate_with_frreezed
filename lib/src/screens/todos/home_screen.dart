@@ -1,5 +1,12 @@
 import 'package:architecture_bloc/src/features/Tabs/tabs.dart';
 import 'package:architecture_bloc/src/features/features.dart';
+import 'package:architecture_bloc/src/screens/todos/screen.dart';
+import 'package:architecture_bloc/src/widgets/button_filter.dart';
+import 'package:architecture_bloc/src/widgets/delete_todo_snackbar.dart';
+import 'package:architecture_bloc/src/widgets/extra_actions.dart';
+import 'package:architecture_bloc/src/widgets/loading_indicator.dart';
+import 'package:architecture_bloc/src/widgets/stats.dart';
+import 'package:architecture_bloc/src/widgets/todo_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,20 +20,18 @@ class HomeScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text('Todo'),
-            actions: const [
-              // FilterButton(visible: activeTab == AppTab.todos),
-              // ExtraActions(),
+            actions:  [
+               FilterButton(visible: activeTab == AppTab.todos),
+              const ExtraActions(),
             ],
           ),
           body:
               activeTab == AppTab.todos ? const FilteredTodos() : const Stats(),
           floatingActionButton: FloatingActionButton(
-            // key: ArchSampleKeys.addTodoFab,
             onPressed: () {
-              // Navigator.pushNamed(context, ArchSampleRoutes.addTodo);
+              Navigator.pushNamed(context, 'addTodo');
             },
             child: const Icon(Icons.add),
-            // tooltip: ArchSampleLocalizations.of(context).addTodo,
           ),
           bottomNavigationBar: TabSelector(
             activeTab: activeTab,
@@ -53,7 +58,6 @@ class TabSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      // key: ArchSampleKeys.tabs,
       currentIndex: AppTab.values.indexOf(activeTab),
       onTap: (index) => onTabSelected(AppTab.values[index]),
       items: AppTab.values.map((tab) {
@@ -71,28 +75,65 @@ class TabSelector extends StatelessWidget {
   }
 }
 
+
 class FilteredTodos extends StatelessWidget {
   const FilteredTodos({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
-    final todos = context
-        .select<TodoBloc, void>((bloc){
-          print(bloc.state);
-        });
-    // final todo = Todo(id: '1', note: 'firts test', task: ';ake app todo with Bloc pattern', complet: false);
-    // context.read<TodoBloc>().add(Added(todo));
-
-    return const Center(child: Text('Todos'));
+    return BlocBuilder<FilteredBloc, FilteredState>(
+      builder: (context, state) {
+        if (state is Loading) {
+          return const LoadingIndicator();
+        } else if (state is LoadedSucces) {
+          final todos = state.todos;
+          return ListView.builder(
+            itemCount: todos.length,
+            itemBuilder: (BuildContext context, int index) {
+              final todo = todos[index];
+              return TodoItem(
+                todo: todo,
+                onDismissed: (direction) {
+                  BlocProvider.of<TodoBloc>(context).add(TodoEvent.deleted(todo));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    DeleteTodoSnackBar(
+                      todo: todo,
+                      onUndo: () => BlocProvider.of<TodoBloc>(context)
+                          .add(TodoEvent.added(todo)),
+                    ),
+                  );
+                },
+                onTap: () async {
+                  final removedTodo = await Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) {
+                      return DetailsScreen(id: todo.id);
+                    }),
+                  );
+                  if (removedTodo != null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      DeleteTodoSnackBar(
+                        todo: todo,
+                        onUndo: () => BlocProvider.of<TodoBloc>(context)
+                            .add(TodoEvent.added(todo)),
+                      ),
+                    );
+                  }
+                },
+                onCheckboxChanged: (_) {
+                  BlocProvider.of<TodoBloc>(context).add(
+                    TodoEvent.updated(todo.copyWith(complet: !todo.complete)),
+                  );
+                },
+              );
+            },
+          );
+        } else {
+          return Container();
+        }
+      },
+    );
   }
 }
 
-class Stats extends StatelessWidget {
-  const Stats({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Stats'));
-  }
-}

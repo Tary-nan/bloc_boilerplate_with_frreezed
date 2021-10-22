@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:architecture_bloc/src/screens/todos/home_screen.dart';
+import 'package:architecture_bloc/src/screens/todos/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,17 +32,16 @@ class TodosApp extends StatelessWidget {
             child: const HomeScreen(),
           );
         },
-        // ArchSampleRoutes.addTodo: (context) {
-        //   return AddEditScreen(
-        //     key: ArchSampleKeys.addTodoScreen,
-        //     onSave: (task, note) {
-        //       BlocProvider.of<TodosBloc>(context).add(
-        //         TodoAdded(Todo(task, note: note)),
-        //       );
-        //     },
-        //     isEditing: false,
-        //   );
-        // },
+        'addTodo': (context) {
+          return AddEditScreen(
+            onSave: (task, note) {
+              BlocProvider.of<TodoBloc>(context).add(
+                TodoEvent.added(Todo(id: DateTime.now().toIso8601String(), note: note, task: task, complet: false)),
+              );
+            },
+            isEditing: false,
+          );
+        },
       },
     );
   }

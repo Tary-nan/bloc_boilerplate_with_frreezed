@@ -18,6 +18,8 @@ class FilteredBloc extends Bloc<FilteredEvent, FilteredState> {
                 filteredTodo: VisibilityFilter.all,
                 todos: (todoBloc.state as Success).todos)
             : FilteredState.loading()) {
+    print('event');
+
     on<FilteredEvent>(_onEventFilter);
 
     _todoSubscription = todoBloc.stream.listen((event) {

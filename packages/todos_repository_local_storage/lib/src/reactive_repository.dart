@@ -5,7 +5,6 @@
 import 'dart:async';
 import 'dart:core';
 
-import 'package:meta/meta.dart';
 import 'package:rxdart/subjects.dart';
 
 import 'package:todos_core_repository/src/todos_core_repository.dart';
@@ -58,7 +57,7 @@ class ReactiveLocalStorageRepository implements ReactiveTodosRepository {
 
     _repository.loadTodos().then((entities) {
       _subject.add(List<TodoEntity>.unmodifiable(
-        [if (_subject.value != null) ..._subject.value, ...entities],
+        [if (_subject.value.isEmpty) ..._subject.value, ...entities],
       ));
     });
   }
