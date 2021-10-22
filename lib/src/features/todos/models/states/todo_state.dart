@@ -7,7 +7,7 @@ part 'todo_state.freezed.dart';
 
 @freezed
 class TodoState with _$TodoState {
-  factory TodoState.loading() = Loading;
+  factory TodoState.loading() = LoadingTodoState;
   factory TodoState.success(List<Todo> todos) = Success;
   factory TodoState.failure() = Failure;
 }

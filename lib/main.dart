@@ -1,18 +1,39 @@
 // import 'package:architecture_bloc/src/app2.dart';
-import 'package:architecture_bloc/src/app.dart';
+import 'dart:io';
+
+import 'package:architecture_bloc/src/app_todos.dart';
+import 'package:architecture_bloc/src/features/features.dart';
+import 'package:path_provider/path_provider.dart';
 // import 'package:architecture_bloc/src/app3.dart';
 // import 'package:architecture_bloc/src/features/kleak/app.dart';
 // import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:user_repository/user_repository.dart';
+
+import 'package:todos_repository_local_storage/src/file_storage.dart';
 
 void main() {
   // Bloc.observer = SimpleBlocObserver();
 
-  runApp(const App());
+  runApp(
+    BlocProvider(
+      create: (context) {
+        return TodoBloc(
+            repositoryTodo: KeyValueStorage(
+              'bloc_app',
+              SharedPreferences.getInstance()
+            ))
+          ..add(TodoEvent.loadedSuccess());
+      },
+      child: const TodosApp(),
+    ),
+  );
+  // runApp(const App());
   // runApp(App(
   //   authenticationRepository: AuthenticationRepository(),
   //   userRepository: UserRepository(),

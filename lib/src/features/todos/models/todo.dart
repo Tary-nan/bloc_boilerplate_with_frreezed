@@ -15,7 +15,6 @@ class Todo with _$Todo {
     required bool complet,
   }) = _Todo;
 
-
   String get idTodo => id;
   String get noteTodo => note;
   String get taskTodo => task;
@@ -23,11 +22,16 @@ class Todo with _$Todo {
 
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
 
-  TodoEntity toEntity(){
-    return TodoEntity(id: idTodo, note: noteTodo, task: taskTodo, complet: complete);
-  }
-  static Todo fromEntity(TodoEntity entity ){
-    return Todo(id: entity.id, note: entity.note, task: entity.task, complet: entity.complet);
+  TodoEntity toEntity() {
+    return TodoEntity(
+        id: idTodo, note: noteTodo, task: taskTodo, complet: complete);
   }
 
+  static Todo fromEntity(TodoEntity entity) {
+    return Todo(
+        id: entity.id,
+        note: entity.note,
+        task: entity.task,
+        complet: entity.complet);
+  }
 }

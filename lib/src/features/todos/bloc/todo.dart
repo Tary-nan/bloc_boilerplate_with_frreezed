@@ -6,8 +6,9 @@ import 'package:bloc/bloc.dart';
 import 'package:todos_repository_local_storage/src/todos_repository_local_storage.dart';
 
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
-  final FileStorage repositoryTodo;
-  TodoBloc({required this.repositoryTodo}) : super(TodoState.loading()) {
+  final KeyValueStorage repositoryTodo;
+  
+  TodoBloc({required this.repositoryTodo }) : super(TodoState.loading()) {
     on<TodoEvent>(_onEventTodos);
   }
 
@@ -21,6 +22,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
         emit(TodoState.success(
             todos.map((entity) => Todo.fromEntity(entity)).toList()));
       } catch (_) {
+        print(_);
         emit(TodoState.failure());
       }
     },

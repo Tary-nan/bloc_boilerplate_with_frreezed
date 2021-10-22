@@ -17,8 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$TodoStateTearOff {
   const _$TodoStateTearOff();
 
-  Loading loading() {
-    return Loading();
+  LoadingTodoState loading() {
+    return LoadingTodoState();
   }
 
   Success success(List<Todo> todos) {
@@ -61,21 +61,21 @@ mixin _$TodoState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Loading value) loading,
+    required TResult Function(LoadingTodoState value) loading,
     required TResult Function(Success value) success,
     required TResult Function(Failure value) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
+    TResult Function(LoadingTodoState value)? loading,
     TResult Function(Success value)? success,
     TResult Function(Failure value)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
+    TResult Function(LoadingTodoState value)? loading,
     TResult Function(Success value)? success,
     TResult Function(Failure value)? failure,
     required TResult orElse(),
@@ -99,25 +99,27 @@ class _$TodoStateCopyWithImpl<$Res> implements $TodoStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $LoadingCopyWith<$Res> {
-  factory $LoadingCopyWith(Loading value, $Res Function(Loading) then) =
-      _$LoadingCopyWithImpl<$Res>;
+abstract class $LoadingTodoStateCopyWith<$Res> {
+  factory $LoadingTodoStateCopyWith(
+          LoadingTodoState value, $Res Function(LoadingTodoState) then) =
+      _$LoadingTodoStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$LoadingCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res>
-    implements $LoadingCopyWith<$Res> {
-  _$LoadingCopyWithImpl(Loading _value, $Res Function(Loading) _then)
-      : super(_value, (v) => _then(v as Loading));
+class _$LoadingTodoStateCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res>
+    implements $LoadingTodoStateCopyWith<$Res> {
+  _$LoadingTodoStateCopyWithImpl(
+      LoadingTodoState _value, $Res Function(LoadingTodoState) _then)
+      : super(_value, (v) => _then(v as LoadingTodoState));
 
   @override
-  Loading get _value => super._value as Loading;
+  LoadingTodoState get _value => super._value as LoadingTodoState;
 }
 
 /// @nodoc
 
-class _$Loading implements Loading {
-  _$Loading();
+class _$LoadingTodoState implements LoadingTodoState {
+  _$LoadingTodoState();
 
   @override
   String toString() {
@@ -126,7 +128,7 @@ class _$Loading implements Loading {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is Loading);
+    return identical(this, other) || (other is LoadingTodoState);
   }
 
   @override
@@ -169,7 +171,7 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Loading value) loading,
+    required TResult Function(LoadingTodoState value) loading,
     required TResult Function(Success value) success,
     required TResult Function(Failure value) failure,
   }) {
@@ -179,7 +181,7 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
+    TResult Function(LoadingTodoState value)? loading,
     TResult Function(Success value)? success,
     TResult Function(Failure value)? failure,
   }) {
@@ -189,7 +191,7 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
+    TResult Function(LoadingTodoState value)? loading,
     TResult Function(Success value)? success,
     TResult Function(Failure value)? failure,
     required TResult orElse(),
@@ -201,8 +203,8 @@ class _$Loading implements Loading {
   }
 }
 
-abstract class Loading implements TodoState {
-  factory Loading() = _$Loading;
+abstract class LoadingTodoState implements TodoState {
+  factory LoadingTodoState() = _$LoadingTodoState;
 }
 
 /// @nodoc
@@ -301,7 +303,7 @@ class _$Success implements Success {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Loading value) loading,
+    required TResult Function(LoadingTodoState value) loading,
     required TResult Function(Success value) success,
     required TResult Function(Failure value) failure,
   }) {
@@ -311,7 +313,7 @@ class _$Success implements Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
+    TResult Function(LoadingTodoState value)? loading,
     TResult Function(Success value)? success,
     TResult Function(Failure value)? failure,
   }) {
@@ -321,7 +323,7 @@ class _$Success implements Success {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
+    TResult Function(LoadingTodoState value)? loading,
     TResult Function(Success value)? success,
     TResult Function(Failure value)? failure,
     required TResult orElse(),
@@ -412,7 +414,7 @@ class _$Failure implements Failure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Loading value) loading,
+    required TResult Function(LoadingTodoState value) loading,
     required TResult Function(Success value) success,
     required TResult Function(Failure value) failure,
   }) {
@@ -422,7 +424,7 @@ class _$Failure implements Failure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
+    TResult Function(LoadingTodoState value)? loading,
     TResult Function(Success value)? success,
     TResult Function(Failure value)? failure,
   }) {
@@ -432,7 +434,7 @@ class _$Failure implements Failure {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Loading value)? loading,
+    TResult Function(LoadingTodoState value)? loading,
     TResult Function(Success value)? success,
     TResult Function(Failure value)? failure,
     required TResult orElse(),

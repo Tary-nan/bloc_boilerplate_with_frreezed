@@ -9,6 +9,8 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  authentication_repository:
+    path: packages/authentication_repository
   auto_route: ^2.4.0
   bloc: ^7.2.0
   cupertino_icons: ^1.0.2
@@ -20,17 +22,15 @@ dependencies:
   http: ^0.13.3
   json_serializable: ^5.0.2
   logger: ^1.1.0
+  path_provider: ^2.0.5
   rxdart: ^0.27.2
-
-  authentication_repository:
-    path: packages/authentication_repository
-  user_repository:
-    path: packages/user_repository
-  
+  shared_preferences: ^2.0.8
   todos_core_repository:
     path: packages/todos_core_repository
   todos_repository_local_storage:
     path: packages/todos_repository_local_storage
+  user_repository:
+    path: packages/user_repository
 
 dev_dependencies:
   auto_route_generator: ^2.4.0
