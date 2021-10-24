@@ -16,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todos_repository_local_storage/src/file_storage.dart';
 
 void main() {
-  // Bloc.observer = SimpleBlocObserver();
+  Bloc.observer = SimpleBlocObserver();
 
   runApp(
     BlocProvider(

@@ -10,6 +10,7 @@ class TodosApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<TodoBloc>();
     return MaterialApp(
       routes: {
         '/': (context) {
@@ -20,12 +21,12 @@ class TodosApp extends StatelessWidget {
               ),
               BlocProvider<FilteredBloc>(
                 create: (context) => FilteredBloc(
-                  todoBloc: BlocProvider.of<TodoBloc>(context),
+                  todoBloc: bloc,
                 ),
               ),
               BlocProvider<StatBloc>(
                 create: (context) => StatBloc(
-                  BlocProvider.of<TodoBloc>(context),
+                  bloc,
                 ),
               ),
             ],
@@ -35,9 +36,14 @@ class TodosApp extends StatelessWidget {
         'addTodo': (context) {
           return AddEditScreen(
             onSave: (task, note) {
-              BlocProvider.of<TodoBloc>(context).add(
-                TodoEvent.added(Todo(id: DateTime.now().toIso8601String(), note: note, task: task, complet: false)),
-              );
+              print('------------- save note ----------------');
+              final todo = Todo(
+                  id: DateTime.now().toIso8601String(),
+                  note: note,
+                  task: task,
+                  complet: false);
+              context.read<TodoBloc>().add(TodoEvent.added(todo));
+              // BlocProvider.of<TodoBloc>(context).add(TodoEvent.added(todo));
             },
             isEditing: false,
           );

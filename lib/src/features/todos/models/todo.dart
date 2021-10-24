@@ -22,6 +22,7 @@ class Todo with _$Todo {
 
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
 
+
   TodoEntity toEntity() {
     return TodoEntity(
         id: idTodo, note: noteTodo, task: taskTodo, complet: complete);

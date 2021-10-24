@@ -1,35 +1,43 @@
 import 'package:architecture_bloc/src/features/features.dart';
+import 'package:architecture_bloc/src/screens/todos/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DetailsScreen extends StatelessWidget {
   final String id;
 
-  const DetailsScreen({Key? key, required this.id})
-      : super(key: key);
+  const DetailsScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TodoBloc, TodoState>(
       builder: (context, state) {
-        final todo = (state as Success)
-            .todos
-            .firstWhere((todo) => todo.id == id,);
-        // final localizations = ArchSampleLocalizations.of(context);
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('detail screen'),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () {
-                  BlocProvider.of<TodoBloc>(context).add(TodoEvent.deleted(todo));
-                  Navigator.pop(context, todo);
-                },
-              )
-            ],
-          ),
-          body:Padding(
+        Todo? todo;
+
+        try {
+          todo = (state as Success).todos.firstWhere(
+                (todo) => todo.id == id,
+              );
+        } catch (e) {
+          todo = null;
+        }
+
+        return todo != null
+            ? Scaffold(
+                appBar: AppBar(
+                  title: const Text('detail screen'),
+                  actions: [
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        BlocProvider.of<TodoBloc>(context)
+                            .add(TodoEvent.deleted(todo!));
+                        Navigator.pop(context, todo);
+                      },
+                    )
+                  ],
+                ),
+                body: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: ListView(
                     children: [
@@ -43,7 +51,7 @@ class DetailsScreen extends StatelessWidget {
                                 onChanged: (_) {
                                   BlocProvider.of<TodoBloc>(context).add(
                                     TodoEvent.updated(
-                                      todo.copyWith(complet: !todo.complete),
+                                      todo!.copyWith(complet: !todo.complete),
                                     ),
                                   );
                                 }),
@@ -79,29 +87,30 @@ class DetailsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-          floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.edit),
-            onPressed: () {
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (context) {
-                    //       return AddEditScreen(
-                    //         onSave: (task, note) {
-                    //           BlocProvider.of<TodoBloc>(context).add(
-                    //             TodoEvent.updated(
-                    //               todo.copyWith(task: task, note: note),
-                    //             ),
-                    //           );
-                    //         },
-                    //         isEditing: true,
-                    //         todo: todo,
-                    //       );
-                    //     },
-                    //   ),
-                    // );
+                floatingActionButton: FloatingActionButton(
+                  child: const Icon(Icons.edit),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return AddEditScreen(
+                            onSave: (task, note) {
+                              BlocProvider.of<TodoBloc>(context).add(
+                                TodoEvent.updated(
+                                  todo!.copyWith(task: task, note: note),
+                                ),
+                              );
+                            },
+                            isEditing: true,
+                            todo: todo,
+                          );
+                        },
+                      ),
+                    );
                   },
-          ),
-        );
+                ),
+              )
+            : Container();
       },
     );
   }

@@ -18,7 +18,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           final products = await _service.fetch();
           final newState =
               state.copyWith(status: ProductStatus.success, products: products);
-          emit(newState);
+          emit(newState); 
         } catch (_) {
           emit(state
               .copyWith(status: ProductStatus.failure, products: <Product>[]));

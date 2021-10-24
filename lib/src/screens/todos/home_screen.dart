@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:architecture_bloc/src/features/Tabs/tabs.dart';
 import 'package:architecture_bloc/src/features/features.dart';
 import 'package:architecture_bloc/src/screens/todos/screen.dart';
@@ -20,8 +22,8 @@ class HomeScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text('Todo'),
-            actions:  [
-               FilterButton(visible: activeTab == AppTab.todos),
+            actions: [
+              FilterButton(visible: activeTab == AppTab.todos),
               const ExtraActions(),
             ],
           ),
@@ -64,9 +66,6 @@ class TabSelector extends StatelessWidget {
         return BottomNavigationBarItem(
           icon: Icon(
             tab == AppTab.todos ? Icons.list : Icons.show_chart,
-            // key: tab == AppTab.todos
-            // ? ArchSampleKeys.todoTab
-            // : ArchSampleKeys.statsTab,
           ),
           label: tab == AppTab.stats ? "stats" : "todos",
         );
@@ -75,58 +74,85 @@ class TabSelector extends StatelessWidget {
   }
 }
 
-
 class FilteredTodos extends StatelessWidget {
   const FilteredTodos({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
+    print('------------------- build -----------------');
+
+    // return ListView.builder(
+    //   itemCount: todos.length,
+    //   itemBuilder: (BuildContext context, int index) { 
+    //     return ListTile(
+    //       leading: const CircleAvatar(),
+    //       title : Text(todos[index].note)
+    //     );
+    //    },
+    // );
+
     return BlocBuilder<FilteredBloc, FilteredState>(
       builder: (context, state) {
+            // final todos = context.select<TodoBloc, int>((bloc)=> (bloc.state as Success).todos.length);
+            // print(todos);
         if (state is Loading) {
           return const LoadingIndicator();
         } else if (state is LoadedSucces) {
           final todos = state.todos;
-          return ListView.builder(
-            itemCount: todos.length,
-            itemBuilder: (BuildContext context, int index) {
-              final todo = todos[index];
-              return TodoItem(
-                todo: todo,
-                onDismissed: (direction) {
-                  BlocProvider.of<TodoBloc>(context).add(TodoEvent.deleted(todo));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    DeleteTodoSnackBar(
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: todos.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final todo = todos[index];
+                    return TodoItem(
                       todo: todo,
-                      onUndo: () => BlocProvider.of<TodoBloc>(context)
-                          .add(TodoEvent.added(todo)),
-                    ),
-                  );
-                },
-                onTap: () async {
-                  final removedTodo = await Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) {
-                      return DetailsScreen(id: todo.id);
-                    }),
-                  );
-                  if (removedTodo != null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      DeleteTodoSnackBar(
-                        todo: todo,
-                        onUndo: () => BlocProvider.of<TodoBloc>(context)
-                            .add(TodoEvent.added(todo)),
-                      ),
+                      onDismissed: (direction) {
+                        BlocProvider.of<TodoBloc>(context)
+                            .add(TodoEvent.deleted(todo));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          DeleteTodoSnackBar(
+                            todo: todo,
+                            onUndo: () => BlocProvider.of<TodoBloc>(context)
+                                .add(TodoEvent.added(todo)),
+                          ),
+                        );
+                      },
+                      onTap: () async {
+                        final removedTodo = await Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) {
+                            return DetailsScreen(id: todo.id);
+                          }),
+                        );
+                        if (removedTodo != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            DeleteTodoSnackBar(
+                              todo: todo,
+                              onUndo: () => BlocProvider.of<TodoBloc>(context)
+                                  .add(TodoEvent.added(todo)),
+                            ),
+                          );
+                        }
+                      },
+                      onCheckboxChanged: (_) {
+                        BlocProvider.of<TodoBloc>(context).add(
+                          TodoEvent.updated(todo.copyWith(complet: !todo.complete)),
+                        );
+                      },
                     );
-                  }
-                },
-                onCheckboxChanged: (_) {
-                  BlocProvider.of<TodoBloc>(context).add(
-                    TodoEvent.updated(todo.copyWith(complet: !todo.complete)),
-                  );
-                },
-              );
-            },
+                  },
+                ),
+              ),
+
+            ElevatedButton(onPressed: (){
+               BlocProvider.of<TodoBloc>(context).add(
+                          TodoEvent.added(Todo(id: '1', note: 'note', task: 'task', complet: false)),
+                        );
+            }
+            , child: const Text('new todo'))
+            ],
           );
         } else {
           return Container();
@@ -135,5 +161,3 @@ class FilteredTodos extends StatelessWidget {
     );
   }
 }
-
-

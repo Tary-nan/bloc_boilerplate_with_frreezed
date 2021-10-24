@@ -7,16 +7,16 @@ import 'package:todos_repository_local_storage/src/todos_repository_local_storag
 
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
   final KeyValueStorage repositoryTodo;
-  
-  TodoBloc({required this.repositoryTodo }) : super(TodoState.loading()) {
+
+  TodoBloc({required this.repositoryTodo}) : super(TodoState.loading()) {
     on<TodoEvent>(_onEventTodos);
   }
 
   Future<void> _onEventTodos(TodoEvent event, emit) async {
     await event.when(
 
-      /// Event : loadedSuccess Todo
-      loadedSuccess: () async {
+        /// Event : loadedSuccess Todo
+        loadedSuccess: () async {
       try {
         final todos = await repositoryTodo.loadTodos();
         emit(TodoState.success(
@@ -26,11 +26,11 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       }
     },
 
-        /// Event :  Add Todo
+        /// Event :  Add Todos
         added: (Todo todo) async {
       if (state is Success) {
-        final updatedTodo =
-            List<Todo>.from((state as Success).todos..add(todo));
+        final updatedTodo = List<Todo>.from((state as Success).todos)
+          ..add(todo);
         emit(TodoState.success(updatedTodo));
         await _saveTodos(updatedTodo); //isolate requis ici ...
       }
@@ -43,8 +43,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
         final List<Todo> updatedTodos = (state as Success).todos.map((todo) {
           return todo.id == newTodo.id ? newTodo : todo;
         }).toList();
-        emit(TodoState.success(updatedTodos));
         await _saveTodos(updatedTodos);
+        emit(TodoState.success(updatedTodos));
       }
     },
 

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 typedef OnSaveCallback = Function(String task, String note);
 
-class AddEditScreen extends StatefulWidget {
+class    AddEditScreen extends StatefulWidget {
   final bool isEditing;
   final OnSaveCallback onSave;
   final Todo? todo;
@@ -49,7 +49,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 autofocus: !isEditing,
                 style: textTheme.headline5,
                 decoration: const InputDecoration(
-                  hintText: '.new Todov Hint',
+                  hintText: 'title',
                 ),
                 validator: (val) {
                   return val!.trim().isEmpty
@@ -63,7 +63,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 maxLines: 10,
                 style: textTheme.subtitle1,
                 decoration: const  InputDecoration(
-                  hintText: 'notesHint',
+                  hintText: 'notes',
                 ),
                 onSaved: (value) => _note = value,
               )

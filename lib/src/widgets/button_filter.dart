@@ -10,10 +10,7 @@ class FilterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final defaultStyle = Theme.of(context).textTheme.bodyText2;
-    final activeStyle = Theme.of(context)
-        .textTheme
-        .bodyText2!
-        .copyWith(color: Theme.of(context).secondaryHeaderColor);
+    const activeStyle = TextStyle(color: Colors.orange);
     return BlocBuilder<FilteredBloc, FilteredState>(
         builder: (context, state) {
 

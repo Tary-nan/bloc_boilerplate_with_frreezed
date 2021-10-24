@@ -8,6 +8,8 @@ import 'package:architecture_bloc/src/features/todos/models/states/todo_state.da
 import 'package:architecture_bloc/src/features/todos/models/todo.dart';
 import 'package:bloc/bloc.dart';
 
+import '../../features.dart';
+
 class FilteredBloc extends Bloc<FilteredEvent, FilteredState> {
   final TodoBloc todoBloc;
   late StreamSubscription _todoSubscription;
@@ -18,44 +20,48 @@ class FilteredBloc extends Bloc<FilteredEvent, FilteredState> {
                 filteredTodo: VisibilityFilter.all,
                 todos: (todoBloc.state as Success).todos)
             : FilteredState.loading()) {
-    print('event');
-
     on<FilteredEvent>(_onEventFilter);
 
-    _todoSubscription = todoBloc.stream.listen((event) {
-      if (event is Success) {
-        add(FilteredEvent.updateTodos(event.todos));
+      _todoSubscription = todoBloc.stream.listen((state) {
+      print('--------------------- an other state --------------');
+      if (state is Success) {
+        add(FilteredEvent.updateTodos(((todoBloc.state as Success).todos)));
       }
     });
   }
 
   void _onEventFilter(FilteredEvent event, emit) {
-    emit(event.when(updateFilter: updateFilter, updateTodos: updateTodos));
-  }
+    event.when(
+      ///
+      /// EVENT . UPDATED FILTER
+      ///
+      updateFilter: (VisibilityFilter filter) {
+      if (todoBloc.state is Success) {
+        final upddatedTodos =
+            _mapTodosToFilteredTodos((todoBloc.state as Success).todos, filter);
 
-  FilteredState? updateTodos(List<Todo> todos) {
-    final visibilityFilter = state is LoadedSucces
-        ? (state as LoadedSucces).filteredTodo
-        : VisibilityFilter.all;
-
-    return FilteredState.loadedSucces(
-        filteredTodo: visibilityFilter,
-        todos: _mapTodosToFilteredTodos(
-          (todoBloc.state as Success).todos,
-          visibilityFilter,
+        emit(FilteredState.loadedSucces(
+          filteredTodo: filter,
+          todos: upddatedTodos,
         ));
-  }
+      }
+    }, 
+      ///
+      /// EVENT . UPDATED TODOS
+      ///
+    updateTodos: (List<Todo> todos) {
+      final currentFilter = state is LoadedSucces
+          ? (state as LoadedSucces).filteredTodo
+          : VisibilityFilter.all;
 
-  FilteredState? updateFilter(VisibilityFilter filter) {
-    if (todoBloc.state is Success) {
-      return FilteredState.loadedSucces(
-        filteredTodo: VisibilityFilter.all,
-        todos: _mapTodosToFilteredTodos(
-          (todoBloc.state as Success).todos,
-          filter,
-        ),
+      final updatedTodos = _mapTodosToFilteredTodos(
+        (todoBloc.state as Success).todos,
+        currentFilter,
       );
-    }
+
+      emit(FilteredState.loadedSucces(
+          filteredTodo: currentFilter, todos: updatedTodos));
+    });
   }
 
   List<Todo> _mapTodosToFilteredTodos(

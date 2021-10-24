@@ -10,19 +10,19 @@ class StatBloc extends Bloc<StatEvent, StatState> {
   late StreamSubscription _todoStreamSubscription;
 
   StatBloc(this.todoBloc) : super(StatState.loading()) {
-    print('------------------');
-    on<StatEvent>(_onEventStats);
-    _todoStreamSubscription = todoBloc.stream.listen((event) {
-      print('----------$event--------');
-      if (event is Success) {
-        add(StatEvent.updated((event.todos)));
+    void onTodosStateChanged(state) {
+      if (state is Success) {
+        add(StatEvent.updated((state.todos)));
       }
-    });
+    }
+
+    on<StatEvent>(_onEventStats);
+
+    onTodosStateChanged(todoBloc.state);
+    _todoStreamSubscription = todoBloc.stream.listen(onTodosStateChanged);
   }
 
   void _onEventStats(StatEvent event, Emitter<StatState?> emit) {
-        print('--------- yo ---------');
-
     emit(event.when(updated: updated));
   }
 
