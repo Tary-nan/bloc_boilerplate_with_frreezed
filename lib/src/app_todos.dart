@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'features/features.dart';
 
-class TodosApp extends StatelessWidget {
+class  TodosApp extends StatelessWidget {
   const TodosApp({Key? key}) : super(key: key);
 
   @override
@@ -36,7 +36,6 @@ class TodosApp extends StatelessWidget {
         'addTodo': (context) {
           return AddEditScreen(
             onSave: (task, note) {
-              print('------------- save note ----------------');
               final todo = Todo(
                   id: DateTime.now().toIso8601String(),
                   note: note,

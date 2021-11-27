@@ -23,7 +23,6 @@ class FilteredBloc extends Bloc<FilteredEvent, FilteredState> {
     on<FilteredEvent>(_onEventFilter);
 
       _todoSubscription = todoBloc.stream.listen((state) {
-      print('--------------------- an other state --------------');
       if (state is Success) {
         add(FilteredEvent.updateTodos(((todoBloc.state as Success).todos)));
       }

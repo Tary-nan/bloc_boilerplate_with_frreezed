@@ -12,7 +12,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     on<TodoEvent>(_onEventTodos);
   }
 
-  Future<void> _onEventTodos(TodoEvent event, emit) async {
+  Future<void> _onEventTodos(TodoEvent event,Emitter<TodoState> emit) async {
     await event.when(
 
         /// Event : loadedSuccess Todo

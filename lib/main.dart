@@ -1,6 +1,6 @@
 // import 'package:architecture_bloc/src/app2.dart';
 
-import 'package:architecture_bloc/src/app_todos.dart';
+import 'package:architecture_bloc/src/app_camera.dart';
 import 'package:architecture_bloc/src/features/features.dart';
 // import 'package:architecture_bloc/src/app3.dart';
 // import 'package:architecture_bloc/src/features/kleak/app.dart';
@@ -28,7 +28,7 @@ void main() {
             ))
           ..add(TodoEvent.loadedSuccess());
       },
-      child: const TodosApp(),
+      child: AppCamera(),
     ),
   );
   // runApp(const App());

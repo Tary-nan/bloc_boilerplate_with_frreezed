@@ -18,17 +18,26 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   void _loginEventCallback(LoginEvent event, emit) async {
-    await event.when(loginPasswordChange: (String value) {
+    await event.when(
+      /// EVENT : PasswordChange
+      ///
+      loginPasswordChange: (String value) {
       final password = Password.dirty(value);
       emit(state.copyWith(
           password: password,
           status: Formz.validate([state.username, password])));
-    }, loginUsernameChange: (String value) {
+    }, 
+     /// EVENT : UsernameChange
+    ///
+    loginUsernameChange: (String value) {
       final username = Username.dirty(value);
       emit(state.copyWith(
           username: username,
           status: Formz.validate([username, state.password])));
-    }, loginSubmitted: () async {
+    }, 
+     /// EVENT : Submitted
+    ///
+    loginSubmitted: () async {
       if (state.status.isValidated) {
         emit(state.copyWith(status: FormzStatus.submissionInProgress));
         try {

@@ -13,7 +13,6 @@ class Stats extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<StatBloc, StatState>(
       builder: (context, state) {
-        print(state);
         if (state is StatStateLoading) {
           return const LoadingIndicator(
           );

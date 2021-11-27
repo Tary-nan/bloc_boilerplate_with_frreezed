@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:architecture_bloc/src/features/Tabs/tabs.dart';
 import 'package:architecture_bloc/src/features/features.dart';
 import 'package:architecture_bloc/src/screens/todos/screen.dart';
@@ -80,7 +78,6 @@ class FilteredTodos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    print('------------------- build -----------------');
 
     // return ListView.builder(
     //   itemCount: todos.length,
