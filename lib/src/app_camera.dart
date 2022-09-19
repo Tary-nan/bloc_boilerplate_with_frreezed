@@ -1,5 +1,4 @@
 import 'package:architecture_bloc/src/features/forms/bloc/form_bloc.dart';
-import 'package:architecture_bloc/src/screens/forms/form_screen.dart';
 import 'package:architecture_bloc/src/screens/forms/forms.dart';
 import 'package:architecture_bloc/src/screens/forms/widget/submit_button.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +47,6 @@ class AppCamera extends StatelessWidget {
 
   TextInput _buildText(String key,
       {String? title,
-      String? value,
       bool required = false,
       InputType type = InputType.text}) {
     title = title ?? _snakeToTitleCase(key);

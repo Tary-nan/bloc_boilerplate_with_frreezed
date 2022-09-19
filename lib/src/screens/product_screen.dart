@@ -2,7 +2,6 @@ import 'package:architecture_bloc/src/features/favorite/show_favorite.dart';
 import 'package:architecture_bloc/src/features/filtered_product/bloc/filter_product_bloc.dart';
 import 'package:architecture_bloc/src/features/product/bloc/product_bloc.dart';
 import 'package:architecture_bloc/src/features/product/models/model.dart';
-import 'package:architecture_bloc/src/features/product/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

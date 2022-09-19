@@ -108,13 +108,13 @@ class _TextInputState extends State<TextInput> {
     );
   }
 
-  String _getLabel() {
-    var label = '';
-    if (!widget.isRequired && _value.isEmpty) label = 'Optionnel';
-    if (_value.isNotEmpty && widget.label.isEmpty ||
-        _getInitialValue().isNotEmpty) return widget.helper;
-    return label;
-  }
+  // String _getLabel() {
+  //   var label = '';
+  //   if (!widget.isRequired && _value.isEmpty) label = 'Optionnel';
+  //   if (_value.isNotEmpty && widget.label.isEmpty ||
+  //       _getInitialValue().isNotEmpty) return widget.helper;
+  //   return label;
+  // }
 
   String _getInitialValue() {
     // initial value established from parent
